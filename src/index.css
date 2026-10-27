@@ -1,0 +1,260 @@
+@import "tailwindcss";
+
+/* =========================================================
+   Design tokens — light SaaS theme (blue / white / slate)
+   ========================================================= */
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", sans-serif;
+
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+  --color-brand-950: #172554;
+
+  --color-navy-700: #15326b;
+  --color-navy-800: #10224d;
+  --color-navy-900: #0a1631;
+  --color-navy-950: #060d21;
+
+  --color-canvas: #f5f7fb;
+  --color-surface: #ffffff;
+
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-fade-in: fade-in 0.5s ease both;
+  --animate-slide-up: slide-up 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.7s linear infinite;
+  --animate-pulse-soft: pulse-soft 2.6s ease-in-out infinite;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-spin-slow: spin 32s linear infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(26px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-14px);
+    }
+  }
+  @keyframes shimmer {
+    0% {
+      background-position: -500px 0;
+    }
+    100% {
+      background-position: 500px 0;
+    }
+  }
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.55;
+      transform: scale(1.12);
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* =========================================================
+   Base
+   ========================================================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html[lang="km"] body,
+  html[lang="km"] button,
+  html[lang="km"] input,
+  html[lang="km"] select,
+  html[lang="km"] textarea {
+    font-family: "Noto Sans Khmer", "Plus Jakarta Sans", ui-sans-serif, sans-serif;
+    line-height: 1.7;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: #0f172a;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-brand-600) 22%, transparent);
+    color: #0f172a;
+  }
+
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #eef1f7;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+    border: 3px solid #eef1f7;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font-family: inherit;
+  }
+
+  body.is-editing [contenteditable="true"],
+  body.is-editing [contenteditable="plaintext-only"] {
+    outline: 1px dashed #2563eb;
+    outline-offset: 3px;
+    border-radius: 4px;
+    cursor: text;
+  }
+  body.is-editing [contenteditable="true"]:focus,
+  body.is-editing [contenteditable="plaintext-only"]:focus {
+    outline: 2px solid #2563eb;
+    background: #eff6ff;
+  }
+
+  /* Recharts draws a black focus box after a click — hide it */
+  .recharts-wrapper,
+  .recharts-wrapper:focus,
+  .recharts-wrapper:focus-visible,
+  .recharts-surface,
+  .recharts-surface:focus,
+  .recharts-surface:focus-visible,
+  .recharts-responsive-container:focus,
+  .recharts-responsive-container:focus-visible {
+    outline: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* =========================================================
+   Utilities
+   ========================================================= */
+
+@utility text-gradient-brand {
+  background-image: linear-gradient(100deg, #1d4ed8 0%, #2563eb 40%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-grid-light {
+  background-image:
+    linear-gradient(to right, rgba(37, 99, 235, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(37, 99, 235, 0.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@utility bg-dots-light {
+  background-image: radial-gradient(rgba(37, 99, 235, 0.16) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+@utility bg-dot-dark {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.22) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* White card with soft enterprise shadow */
+@utility panel {
+  background-color: #ffffff;
+  border: 1px solid #e6ebf3;
+  border-radius: 1rem;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 12px 32px -18px rgba(15, 23, 42, 0.18);
+}
+
+/* Skeleton shimmer block */
+@utility skeleton {
+  background: linear-gradient(
+    90deg,
+    #eef1f7 0%,
+    #e2e8f0 40%,
+    #eef1f7 80%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 1.7s linear infinite;
+  border-radius: 0.5rem;
+}
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@utility reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
